@@ -21,7 +21,7 @@ def create_graph(num_vertices:int, num_edges:int):
     if num_edges > max_edges:
         raise ValueError(f"Too many edges. Maximum for {num_vertices} vertices is {max_edges}.")
 
-    graph = {i: [] for i in range(num_vertices)}
+    graph = {vertex: [] for vertex in range(num_vertices)}
     edges_array = []
     existing_edges = set()
 
