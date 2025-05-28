@@ -66,6 +66,37 @@ def print_graph(graph:dict):
     for vertex, edges in graph.items():
         print(f"{vertex} -> {[(v, w) for v, w in edges]}")
 
+
+def prim_algorithm(vertices:list[int], edges:list[tuple]) -> list[tuple[int, int, int]]:
+    """
+    :param vertices: The adjacency list of the graph (dictionary)
+    :param edges: The list of tuples representing edges
+    :return: mst graph after prim's algorithm
+    """
+    mst_graph  = []
+    mst_vertices_dict = {vertices[0]}
+    edges_with_weights = [(weight, start, end) for start, end, weight in edges]
+
+    edges_with_weights.sort() # This sorts the edges according to their weights
+
+    while len(mst_vertices_dict) < len(vertices):
+        for edge in edges_with_weights:
+            (weight, start_vertex, end_vertex) = edge
+            if (start_vertex in mst_vertices_dict and end_vertex not in mst_vertices_dict or
+                    end_vertex in mst_vertices_dict and start_vertex not in mst_vertices_dict):
+                mst_graph.append((start_vertex, end_vertex, weight))
+                mst_vertices_dict.update([start_vertex, end_vertex])
+                break
+    return mst_graph
+
+def print_mst_graph(mst:list[tuple[int, int, int]]):
+    """
+    Prints the mst graph
+    :param mst: The mst graph as list of tuples representing edges
+    """
+    for start, end, weight in mst:
+        print(f"{start} - {end} with weight {weight}")
+
 def main():
     num_vertices = 6
     num_edges = 8
@@ -75,9 +106,13 @@ def main():
         graph, edges = result
         print_graph(graph)
 
-        print("\nEdge list:")
+        print("\nEdges list:")
         for v1, v2, weight in edges:
             print(f"{v1} --({weight})-- {v2}")
+        mst_graph = prim_algorithem(list(range(num_vertices)), edges)
+
+        print("\nThe MST Tree is:")
+        print_mst_graph(mst_graph)
 
 if __name__ == "__main__":
     main()
