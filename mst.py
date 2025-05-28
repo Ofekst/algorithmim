@@ -109,7 +109,7 @@ def main():
         print("\nEdges list:")
         for v1, v2, weight in edges:
             print(f"{v1} --({weight})-- {v2}")
-        mst_graph = prim_algorithem(list(range(num_vertices)), edges)
+        mst_graph = prim_algorithm(list(range(num_vertices)), edges)
 
         print("\nThe MST Tree is:")
         print_mst_graph(mst_graph)
