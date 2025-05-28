@@ -1,6 +1,6 @@
 import random
 
-def create_graph(num_vertices:int, num_edges:int):
+def create_graph(num_vertices:int, num_edges:int) -> (dict[int,list[int]],list[int]):
     """
     Creates a connected undirected weighted graph
 
