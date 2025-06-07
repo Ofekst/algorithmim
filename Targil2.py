@@ -1,18 +1,18 @@
-def add_edge_from_mst_dict(mst: dict, edge):
-    v, u, w = edge
-    # # maby add check to see if the vertex is not new
-    # add check if the edge exists
-    mst[v].append((u, w))
-    mst[u].append((v, w))
-    return mst
+from mst import create_graph, print_graph
 
-def remove_edge_from_mst_dict(mst: dict, edge):
-    v, u, w = edge
+# def add_edge_from_mst_dict(mst: dict, edge):
+#     v, u, w = edge
+#     mst[v].append((u, w))
+#     mst[u].append((v, w))
+#     return mst
 
-    mst[v].remove((u, w))
-    mst[u].remove((v, w))
+# def remove_edge_from_mst_dict(mst: dict, edge):
+#     v, u, w = edge
 
-    return mst
+#     mst[v].remove((u, w))
+#     mst[u].remove((v, w))
+
+#     return mst
 
 def remove_edge_from_mst_list(mst: list, edge_to_remove):
     u, v, w = edge_to_remove
@@ -38,11 +38,9 @@ def add_edge_from_mst_list(mst: list, new_edge):
     return mst
 
 def exchange_edge(mst: list, edge_to_exchange, new_edge):
-    if new_edge not in mst:
-        tree_with_new_edge = add_edge_from_mst_list(mst, new_edge)
-        tree_aftrer_removing_edge = remove_edge_from_mst_list(tree_with_new_edge, edge_to_exchange)
-        
-        return tree_aftrer_removing_edge
+    tree_with_new_edge = add_edge_from_mst_list(mst, new_edge)
+    tree_aftrer_removing_edge = remove_edge_from_mst_list(tree_with_new_edge, edge_to_exchange)
+    return tree_aftrer_removing_edge
 
 def find_cycle_fast(mst, new_edge):
     graph = {}       
@@ -102,15 +100,20 @@ def add_edge_to_mst(mst: list, new_edge):
     return new_mst
             
             
-edges_array = [(0, 1, 1), (1, 4, 6), (0, 2, 10), (0, 3, 10), (4, 5, 10)]
+# # edges_array = [(0, 1, 1), (1, 4, 6), (0, 2, 10), (0, 3, 10), (4, 5, 10)]
+# graph, edges_array = create_graph(6, 8)
 
 
-new_edge = (1, 2, 10)
-remove_edge_ofek = (0, 1, 1)
+# new_edge = (1, 2, 10)
+# remove_edge_ofek = (0, 1, 1)
 
-# print(add_edge(graph, new_edge))
-# print(remove_edge(graph, remove_edge_ofek))
+# print_graph(graph)
 
-# print(exchange_edge(graph, remove_edge_ofek, new_edge))
+# print("New graph")
+# print(exchange_edge(edges_array, remove_edge_ofek, new_edge))
 
-print(add_edge_to_mst(edges_array, new_edge))
+
+# # print(add_edge_to_mst(edges_array, new_edge))
+# # print(add_edge(graph, new_edge))
+# # print(remove_edge(graph, remove_edge_ofek))
+
