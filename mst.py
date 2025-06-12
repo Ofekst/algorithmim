@@ -57,7 +57,7 @@ def create_graph(num_vertices:int, num_edges:int):
 
     return graph, edges_array
 
-def print_graph(graph:dict):
+def print_full_graph(graph:dict):
     """
     Prints the graph's adjacency list
     :param graph: The adjacency list of the graph (dictionary)
@@ -142,7 +142,7 @@ def main():
     result = create_graph(num_vertices, num_edges)
     if result:
         graph, edges = result
-        print_graph(graph)
+        print_full_graph(graph)
 
         print("\nEdges list:")
         for v1, v2, weight in edges:

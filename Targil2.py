@@ -1,4 +1,4 @@
-from mst import create_graph, print_graph
+from mst import create_graph, print_full_graph
 
 # def add_edge_from_mst_dict(mst: dict, edge):
 #     v, u, w = edge
