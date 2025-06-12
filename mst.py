@@ -69,6 +69,7 @@ def print_full_graph(graph:dict):
 
 def prim_algorithm(vertices:list[int], edges:list[tuple]) -> list[tuple[int, int, int]]:
     """
+     The function implements PRIM algorithm
     :param vertices: The adjacency list of the graph (dictionary)
     :param edges: The list of tuples representing edges
     :return: mst graph after prim's algorithm
