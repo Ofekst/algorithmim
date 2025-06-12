@@ -57,7 +57,7 @@ def create_graph(num_vertices:int, num_edges:int):
 
     return graph, edges_array
 
-def print_graph(graph:dict):
+def print_full_graph(graph:dict):
     """
     Prints the graph's adjacency list
     :param graph: The adjacency list of the graph (dictionary)
@@ -66,6 +66,76 @@ def print_graph(graph:dict):
     for vertex, edges in graph.items():
         print(f"{vertex} -> {[(v, w) for v, w in edges]}")
 
+
+def prim_algorithm(vertices:list[int], edges:list[tuple]) -> list[tuple[int, int, int]]:
+    """
+     The function implements PRIM algorithm
+    :param vertices: The adjacency list of the graph (dictionary)
+    :param edges: The list of tuples representing edges
+    :return: mst graph after prim's algorithm
+    """
+    mst_graph  = []
+    mst_vertices_dict = {vertices[0]}
+    edges_with_weights = [(weight, start, end) for start, end, weight in edges]
+
+    edges_with_weights.sort() # This sorts the edges according to their weights
+
+    while len(mst_vertices_dict) < len(vertices):
+        for edge in edges_with_weights:
+            (weight, start_vertex, end_vertex) = edge
+            if (start_vertex in mst_vertices_dict and end_vertex not in mst_vertices_dict or
+                    end_vertex in mst_vertices_dict and start_vertex not in mst_vertices_dict):
+                mst_graph.append((start_vertex, end_vertex, weight))
+                mst_vertices_dict.update([start_vertex, end_vertex])
+                break
+    return mst_graph
+
+def print_mst_graph(mst:list[tuple[int, int, int]]):
+    """
+    Prints the mst graph
+    :param mst: The mst graph as list of tuples representing edges
+    """
+    for start, end, weight in mst:
+        print(f"{start} - {end} with weight {weight}")
+
+def add_edge_that_does_not_change_mst(mst, vertices):
+    """
+    Adds an edge between two vertices such that it doesn't
+    change the structure of the given MST.
+
+    :param mst: List of tuples representing the MST edges in the form (start_vertex, end_vertex, weight).
+    :param vertices: List of all vertices in the graph.
+    :return: A tuple (v1, v2, weight) representing the new edge that does not affect the MST.
+    """
+    while True:
+        v1, v2 = random.sample(vertices, 2)
+        if not any((v1 == start and v2 == end) or (v1 == end and v2 == start) for start, end, _ in mst):
+            path_exists = False
+            for start, end, weight in mst:
+                if v1 == start or v1 == end or v2 == start or v2 == end:
+                    path_exists = True
+                    break
+            if path_exists:
+                weight = max(weight for start, end, weight in mst) + random.randint(1, 10)
+                print(f"Adding edge ({v1}, {v2}) with weight {weight}")
+                return v1, v2, weight
+
+def add_edge_that_changes_mst(mst, vertices):
+    """
+    Adds an edge between two vertices that changes the structure of the given MST.
+
+    :param mst: List of tuples representing the MST edges in the form (start_vertex, end_vertex, weight).
+    :param vertices: List of all vertices in the graph.
+    :return: A tuple (v1, v2, weight) representing the new edge that could replace an edge in the MST.
+    """
+
+    while True:
+        v1, v2 = random.sample(vertices, 2)
+        if not any((v1 == start and v2 == end) or (v1 == end and v2 == start) for start, end, weight in mst):
+            weight = min(weight for start, end, weight in mst) - 1
+            print(f"Adding edge ({v1}, {v2}) with weight {weight}")
+            return v1, v2, weight
+
 def main():
     num_vertices = 6
     num_edges = 8
@@ -73,11 +143,15 @@ def main():
     result = create_graph(num_vertices, num_edges)
     if result:
         graph, edges = result
-        print_graph(graph)
+        print_full_graph(graph)
 
-        print("\nEdge list:")
+        print("\nEdges list:")
         for v1, v2, weight in edges:
             print(f"{v1} --({weight})-- {v2}")
+        mst_graph = prim_algorithm(list(range(num_vertices)), edges)
+
+        print("\nThe MST Tree is:")
+        print_mst_graph(mst_graph)
 
 if __name__ == "__main__":
     main()
