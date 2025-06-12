@@ -67,7 +67,7 @@ def print_full_graph(graph:dict):
         print(f"{vertex} -> {[(v, w) for v, w in edges]}")
 
 
-def prim_algorithm(vertices:list[int], edges:list[tuple]) -> list[tuple[int, int, int]]:
+def prim_algorithm(vertices:list, edges:list[tuple]) -> list[tuple[int, int, int]]:
     """
      The function implements PRIM algorithm
     :param vertices: The adjacency list of the graph (dictionary)
@@ -137,21 +137,36 @@ def add_edge_that_changes_mst(mst, vertices):
             return v1, v2, weight
 
 def main():
-    num_vertices = 6
-    num_edges = 8
+    vertices_array = ["A" , "B" , "C" , "D" , "E"]
+    edges_array = [
+        ("A" , "B" , 2),
+        ("A" , "C" , 3),
+        ("B" , "C" , 1),
+        ("B" , "D" , 5),
+        ("D" , "E" , 1),
+        ("C" , "E" , 4)
 
-    result = create_graph(num_vertices, num_edges)
-    if result:
-        graph, edges = result
-        print_full_graph(graph)
+    ]
 
-        print("\nEdges list:")
-        for v1, v2, weight in edges:
-            print(f"{v1} --({weight})-- {v2}")
-        mst_graph = prim_algorithm(list(range(num_vertices)), edges)
+    result = prim_algorithm (vertices_array,edges_array)
+    print("\nThe MST Tree is:")
+    print_mst_graph(result)
 
-        print("\nThe MST Tree is:")
-        print_mst_graph(mst_graph)
+    # num_vertices = 20
+    # num_edges = 50
+    #
+    # result = create_graph(num_vertices, num_edges)
+    # if result:
+    #     graph, edges = result
+    #     print_full_graph(graph)
+    #
+    #     print("\nEdges list:")
+    #     for v1, v2, weight in edges:
+    #         print(f"{v1} --({weight})-- {v2}")
+    #     mst_graph = prim_algorithm(list(range(num_vertices)), edges)
+    #
+    #     print("\nThe MST Tree is:")
+    #     print_mst_graph(mst_graph)
 
 if __name__ == "__main__":
     main()
