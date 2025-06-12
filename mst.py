@@ -97,6 +97,44 @@ def print_mst_graph(mst:list[tuple[int, int, int]]):
     for start, end, weight in mst:
         print(f"{start} - {end} with weight {weight}")
 
+def add_edge_that_does_not_change_mst(mst, vertices):
+    """
+    Adds an edge between two vertices such that it doesn't
+    change the structure of the given MST.
+
+    :param mst: List of tuples representing the MST edges in the form (start_vertex, end_vertex, weight).
+    :param vertices: List of all vertices in the graph.
+    :return: A tuple (v1, v2, weight) representing the new edge that does not affect the MST.
+    """
+    while True:
+        v1, v2 = random.sample(vertices, 2)
+        if not any((v1 == start and v2 == end) or (v1 == end and v2 == start) for start, end, _ in mst):
+            path_exists = False
+            for start, end, weight in mst:
+                if v1 == start or v1 == end or v2 == start or v2 == end:
+                    path_exists = True
+                    break
+            if path_exists:
+                weight = max(weight for start, end, weight in mst) + random.randint(1, 10)
+                print(f"Adding edge ({v1}, {v2}) with weight {weight}")
+                return v1, v2, weight
+
+def add_edge_that_changes_mst(mst, vertices):
+    """
+    Adds an edge between two vertices that changes the structure of the given MST.
+
+    :param mst: List of tuples representing the MST edges in the form (start_vertex, end_vertex, weight).
+    :param vertices: List of all vertices in the graph.
+    :return: A tuple (v1, v2, weight) representing the new edge that could replace an edge in the MST.
+    """
+
+    while True:
+        v1, v2 = random.sample(vertices, 2)
+        if not any((v1 == start and v2 == end) or (v1 == end and v2 == start) for start, end, weight in mst):
+            weight = min(weight for start, end, weight in mst) - 1
+            print(f"Adding edge ({v1}, {v2}) with weight {weight}")
+            return v1, v2, weight
+
 def main():
     num_vertices = 6
     num_edges = 8
